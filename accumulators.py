@@ -65,3 +65,19 @@ def grouped_count(iterator):
     for item in iterator:
         d[item] = d.get(item, 0) + 1
         yield d
+
+def scanning(fn):
+    '''Scan across the iterator with the given function. The output stream will
+    be `b[0] = a[0]`, `b[1] = fn(b[0], a[1])`, `b[2] = fn(b[1], a[0])`, and so 
+    forth. In other words, this is `scanl1` from Haskell.'''
+    def out(iterator):
+        is_set = False
+        value = None
+        for item in iterator:
+            if not is_set:
+                value = item
+                is_set = True
+            else:
+                value = fn(value, item)
+            yield value
+    return out

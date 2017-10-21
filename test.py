@@ -114,13 +114,37 @@ class TestAccumulators(unittest.TestCase):
 
     def test_unique(self):
         src = iter(
-            ['apples','mangoes','apples','mangoes','oranges','apples','oranges','plums']
+            ['apple','mango','apple','mango','orange','apple','orange','plum']
         )
         self.assertEqual(
             list(accumulators.unique(src)),
             [1, 2, 2, 2, 3, 3, 3, 4]
         )
 
+    def test_grouped_count(self):
+        src = accumulators.grouped_count(iter(
+            ['apple','mango','apple','mango','orange','apple','orange','plum']
+        ))
+        self.assertEqual(src.next(), {'apple': 1})
+        self.assertEqual(src.next(), {'apple': 1, 'mango': 1})
+        self.assertEqual(src.next(), {'apple': 2, 'mango': 1})
+        self.assertEqual(src.next(), {'apple': 2, 'mango': 2})
+        self.assertEqual(src.next(), {'apple': 2, 'mango': 2, 'orange': 1})
+        self.assertEqual(src.next(), {'apple': 3, 'mango': 2, 'orange': 1})
+        self.assertEqual(src.next(), {'apple': 3, 'mango': 2, 'orange': 2})
+        self.assertEqual(src.next(), {'apple': 3, 'mango': 2, 'orange': 2, 'plum': 1})
+
+    def test_scanning(self):
+        x = [7, 2, 5, 3, 6, 1, 8, 4, 0, 9]
+        self.assertEqual(
+            list(accumulators.scanning(min)(iter(x))),
+            [7, 2, 2, 2, 2, 1, 1, 1, 0, 0]
+        )
+        x = [7, 2, 5, 3, 6, 1, 8, 4, 0, 9]
+        self.assertEqual(
+            list(accumulators.scanning(max)(iter(x))),
+            [7, 7, 7, 7, 7, 7, 8, 8, 8, 9]
+        )
 
 if __name__ == "__main__":
     unittest.main()
