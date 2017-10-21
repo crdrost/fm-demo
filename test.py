@@ -61,13 +61,14 @@ class TestStream(unittest.TestCase):
         with self.assertRaises(StopIteration):
             x.next()
 
+def adder(n):
+    def out(iterator):
+        for i in iterator:
+            yield i + n
+    return out
+
 class TestAccumulators(unittest.TestCase):
     def test_batch(self):
-        def adder(n):
-            def out(iterator):
-                for i in iterator:
-                    yield i + n
-            return out
         acc = accumulators.batch(adder(3), adder(5))
         x = acc(xrange(4))
         self.assertEqual(x.next(), (3, 5))
@@ -77,6 +78,12 @@ class TestAccumulators(unittest.TestCase):
         with self.assertRaises(StopIteration):
             x.next()
 
+    def test_prefilter(self):
+        acc = accumulators.prefilter(adder(10), lambda x: x % 3 == 1)
+        self.assertEqual(
+            list(acc(xrange(10))),
+            [None, 11, 11, 11, 14, 14, 14, 17, 17, 17]
+        )
 
 
 if __name__ == "__main__":
