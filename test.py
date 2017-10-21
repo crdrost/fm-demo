@@ -1,5 +1,6 @@
 import unittest
 import stream
+import datetime
 
 class TestStream(unittest.TestCase):
     def test_dicts_from_lists(self):
@@ -41,7 +42,7 @@ class TestStream(unittest.TestCase):
         d = datetime.datetime(2016, 10, 28, 5, 0, 0)
         self.assertEqual(
             x.next(),
-            ('gps', d, 8765, (681665533, 35.05875, -80.38093, 0.0184125))
+            ('gps', d, 8765, (681665533, 35.05875, -80.38093, 0.0184125, 0.0))
         )
         self.assertEqual(
             x.next(),
