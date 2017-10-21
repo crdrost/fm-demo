@@ -22,3 +22,18 @@ def batch(*accs):
         for i in copies[-1]:
             yield tuple(stream.next() for stream in result_streams)
     return out
+
+def prefilter(acc, predicate):
+    '''Filter the input to an accumulator based on whether it satisfies the
+    predicate.'''
+    def out(iterator):
+        (i1, i2) = itertools.tee(iterator, 2)
+        output = acc(itertools.ifilter(predicate, i2))
+        last = None
+        for i in i1:
+            # There's a way to write this without duplicating the check but this
+            # just looks so much cleaner.
+            if predicate(i):
+                last = output.next()
+            yield last
+    return out
