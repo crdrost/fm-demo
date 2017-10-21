@@ -1,6 +1,8 @@
 import unittest
 import stream
 import datetime
+import accumulators
+
 
 class TestStream(unittest.TestCase):
     def test_dicts_from_lists(self):
@@ -58,6 +60,24 @@ class TestStream(unittest.TestCase):
         )
         with self.assertRaises(StopIteration):
             x.next()
+
+class TestAccumulators(unittest.TestCase):
+    def test_batch(self):
+        def adder(n):
+            def out(iterator):
+                for i in iterator:
+                    yield i + n
+            return out
+        acc = accumulators.batch(adder(3), adder(5))
+        x = acc(xrange(0, 3))
+        self.assertEqual(x.next(), (3, 5))
+        self.assertEqual(x.next(), (4, 6))
+        self.assertEqual(x.next(), (5, 7))
+        self.assertEqual(x.next(), (6, 8))
+        with self.assertRaises(StopIteration):
+            x.next()
+
+
 
 if __name__ == "__main__":
     unittest.main()
