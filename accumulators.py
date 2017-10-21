@@ -58,3 +58,10 @@ def unique(iterator):
     for item in iterator:
         s.add(item)
         yield len(s)
+
+def grouped_count(iterator):
+    '''Create a dictionary of the counts of how many times each value is seen in the iterator.'''
+    d = dict()
+    for item in iterator:
+        d[item] = d.get(item, 0) + 1
+        yield d
