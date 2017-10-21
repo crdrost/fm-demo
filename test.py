@@ -69,7 +69,7 @@ class TestAccumulators(unittest.TestCase):
                     yield i + n
             return out
         acc = accumulators.batch(adder(3), adder(5))
-        x = acc(xrange(0, 3))
+        x = acc(xrange(4))
         self.assertEqual(x.next(), (3, 5))
         self.assertEqual(x.next(), (4, 6))
         self.assertEqual(x.next(), (5, 7))
