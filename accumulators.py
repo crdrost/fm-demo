@@ -39,3 +39,8 @@ def prefilter(acc, predicate):
                 last = output.next()
             yield last
     return out
+
+def premap(acc, fn):
+    '''Map the inputs to this accumulator with the given function before applying
+    it to them.'''
+    return lambda iterator: acc(itertools.imap(fn, iterator))

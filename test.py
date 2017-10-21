@@ -85,6 +85,12 @@ class TestAccumulators(unittest.TestCase):
             [None, 11, 11, 11, 14, 14, 14, 17, 17, 17]
         )
 
+    def test_premap(self):
+        acc = accumulators.premap(adder(10), lambda x: x - 10)
+        self.assertEqual(
+            list(acc(xrange(10))),
+            range(10)
+        )
 
 if __name__ == "__main__":
     unittest.main()
