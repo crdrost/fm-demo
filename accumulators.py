@@ -25,7 +25,7 @@ def batch(*accs):
             yield tuple(stream.next() for stream in result_streams)
     return out
 
-def prefilter(acc, predicate):
+def prefilter(predicate, acc):
     '''Filter the input to an accumulator based on whether it satisfies the
     predicate.'''
     def out(iterator):
@@ -40,7 +40,7 @@ def prefilter(acc, predicate):
             yield last
     return out
 
-def premap(acc, fn):
+def premap(fn, acc):
     '''Map the inputs to this accumulator with the given function before applying
     it to them.'''
     return lambda iterator: acc(itertools.imap(fn, iterator))
