@@ -22,7 +22,7 @@ def gpscans_from_dicts(rows):
     or
 
         ('gps', ts, puc_id, (gps_id, latitude, longitude, groundspeed, truecourse))
-    
+
     from the {'ts', 'puc_id', 'gps_id', 'message_id', ...} etc dictionary of rows.
     """
     for row in rows:
