@@ -16,6 +16,8 @@ before acting on it.
 '''
 
 def batch(*accs):
+    '''Batch together all of the accumulators `*accs` so that they all act on a
+    single iterator.'''
     def out(iterator):
         copies = itertools.tee(iterator, len(accs) + 1)
         result_streams = tuple(a(c) for (a, c) in itertools.izip(accs, copies))
