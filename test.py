@@ -92,5 +92,35 @@ class TestAccumulators(unittest.TestCase):
             range(10)
         )
 
+    def test_prefilter(self):
+        acc = accumulators.prefilter(lambda x: x % 3 == 1, adder(10))
+        self.assertEqual(
+            list(acc(xrange(10))),
+            [None, 11, 11, 11, 14, 14, 14, 17, 17, 17]
+        )
+
+    def test_premap(self):
+        acc = accumulators.premap(lambda x: x - 10, adder(10))
+        self.assertEqual(
+            list(acc(xrange(10))),
+            range(10)
+        )
+
+    def test_count(self):
+        self.assertEqual(
+            list(accumulators.count(xrange(50, 500))),
+            range(1, 451)
+        )
+
+    def test_unique(self):
+        src = iter(
+            ['apples','mangoes','apples','mangoes','oranges','apples','oranges','plums']
+        )
+        self.assertEqual(
+            list(accumulators.unique(src)),
+            [1, 2, 2, 2, 3, 3, 3, 4]
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

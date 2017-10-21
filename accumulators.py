@@ -44,3 +44,17 @@ def premap(fn, acc):
     '''Map the inputs to this accumulator with the given function before applying
     it to them.'''
     return lambda iterator: acc(itertools.imap(fn, iterator))
+
+def count(iterator):
+    '''Count the number of items in the iterator.'''
+    c = 0
+    for item in iterator:
+        c += 1
+        yield c
+
+def unique(iterator):
+    '''Count the number of unique items in the iterator.'''
+    s = set()
+    for item in iterator:
+        s.add(item)
+        yield len(s)
