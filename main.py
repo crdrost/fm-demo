@@ -2,6 +2,21 @@ import csv
 import accumulators as acc
 import stream
 
+'''
+Run this program on a CSV file.
+
+As defined in stream.py a "gpscan" data structure is a tuple of
+
+    (type, timestamp, puc_id, meta),
+
+where the type is either `gps` or `can` and defines the syntax of the `meta`
+tuple. For `can` entries `meta` is `(message_id, dlc, payload)` while for `gps`
+entries `meta` is `(gps_id, latitude, longitude, groundspeed, truecourse)`. The
+following functions test and manipulate these in order to produce some aggregate
+statistics; we try to keep each statistic's logic separate using the accumulator
+functions in `accumulators.py`.
+'''
+
 def is_gps(gpscan):
     return gpscan[0] == 'gps'
 
