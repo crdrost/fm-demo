@@ -26,7 +26,7 @@ def gpscans_from_dicts(rows):
     from the {'ts', 'puc_id', 'gps_id', 'message_id', ...} etc dictionary of rows.
     """
     for row in rows:
-        ts = datetime.datetime.strptime(row['ts'], '%Y-%m-%d %H:%M:%S')
+        ts = row['ts']
         puc_id = int(row['puc_id'])
         if row.get('message_id', '') != '':
             yield ('can', ts, puc_id,

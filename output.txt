@@ -1,0 +1,8 @@
+Total GPS messages:  63843
+Total CAN messages:  1099032
+Unique CAN IDs:      61
+Time span covered:   20:34:58
+Average CANs/sec:    14.832141
+Average CANs/GPS:    17.214605
+Most CANs seen at:   2016-10-28 11:51:28
+Least CANs seen at:  2016-10-28 08:56:35

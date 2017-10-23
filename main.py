@@ -1,6 +1,7 @@
 import csv
 import accumulators as acc
 import stream
+from datetime import datetime
 
 '''
 Run this program on a CSV file.
@@ -81,7 +82,8 @@ if __name__ == '__main__':
         (g_tot, c_tot, c_uni, min_ts, max_ts, ts_counts) = just_the_last_row(
             raw_stats_accumulator(gpscans)
         )
-        time_elapsed = max_ts - min_ts
+        time_elapsed = datetime.strptime(max_ts, '%Y-%m-%d %H:%M:%S') - \
+                datetime.strptime(min_ts, '%Y-%m-%d %H:%M:%S')
         c_tot = maybe(c_tot, 0)
         print 'Total GPS messages:  %i' % maybe(g_tot, 0)
         print 'Total CAN messages:  %i' % c_tot
